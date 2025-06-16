@@ -21,7 +21,7 @@ const shoppingCartReducer = (state, action) => {
         return cart;
       }
       return state;
-      // return updated state from here
+      
     }
     case CART_ACTIONS.REMOVE_FROM_CART: {
       const { id } = action.payload;

@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     Dimensions,
-    FlatList, // Not used in the provided code, but kept for completeness
+    FlatList, 
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -15,9 +15,9 @@ const { width } = Dimensions.get('window');
 const ProductDetails = ({ route }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const { product } = route.params || {}; // Added a default empty object for product
+    const { product } = route.params || {}; 
 
-    // Sample product data - replace with your actual data
+    
     const sampleProduct = {
         id: 1,
         name: 'iPhone 15 Pro Max',
@@ -117,7 +117,7 @@ const ProductDetails = ({ route }) => {
         ],
     };
 
-    // Merge product passed via route params with sample data (for demonstration)
+   
     const productData = { ...sampleProduct, ...product };
 
     const renderStars = (rating) => {
@@ -129,7 +129,7 @@ const ProductDetails = ({ route }) => {
             stars.push(<Text key={i} style={styles.star}>★</Text>);
         }
         if (hasHalfStar) {
-            stars.push(<Text key="half" style={styles.halfStar}>★</Text>); // Using full star for half to simulate, could use a specific half-star icon
+            stars.push(<Text key="half" style={styles.halfStar}>★</Text>); 
         }
         for (let i = stars.length; i < 5; i++) {
             stars.push(<Text key={i} style={styles.emptyStar}>☆</Text>);
@@ -318,10 +318,10 @@ const ProductDetails = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5', // Lighter background for the entire screen
+        backgroundColor: '#F5F5F5', 
     },
     imageCarouselContainer: {
-        height: 320, // Slightly increased height for carousel
+        height: 320, 
         backgroundColor: '#FFFFFF',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
@@ -339,8 +339,8 @@ const styles = StyleSheet.create({
     productCarouselImage: {
         width: width,
         height: '100%',
-        resizeMode: 'contain', // Changed to contain to prevent cropping and show full image
-        backgroundColor: '#FFFFFF', // Background for images within carousel
+        resizeMode: 'contain', 
+        backgroundColor: '#FFFFFF', 
     },
     imageIndicators: {
         flexDirection: 'row',
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         marginHorizontal: 10,
         borderRadius: 15,
-        marginTop: -30, // Overlap with carousel for a cohesive look
+        marginTop: -30, 
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#6A6A6A',
         marginBottom: 5,
-        fontFamily: 'Avenir-Medium', // Example font
+        fontFamily: 'Avenir-Medium', 
     },
     productName: {
         fontSize: 26,
@@ -398,16 +398,16 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     star: {
-        color: '#FFC107', // Gold color for filled stars
+        color: '#FFC107', 
         fontSize: 20,
     },
     halfStar: {
         color: '#FFC107',
         fontSize: 20,
-        opacity: 0.6, // Visual cue for half star
+        opacity: 0.6, 
     },
     emptyStar: {
-        color: '#E0E0E0', // Lighter color for empty stars
+        color: '#E0E0E0',
         fontSize: 20,
     },
     ratingText: {
@@ -438,11 +438,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#28A745',
         fontWeight: 'bold',
-        backgroundColor: '#E6F4EA', // Light green background for discount
+        backgroundColor: '#E6F4EA', 
         paddingHorizontal: 8,
         paddingVertical: 3,
         borderRadius: 5,
-        overflow: 'hidden', // Ensures background color respects borderRadius
+        overflow: 'hidden', 
         fontFamily: 'Avenir-Medium',
     },
     tabsContainer: {
@@ -456,17 +456,17 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.08,
         shadowRadius: 3,
         elevation: 2,
-        overflow: 'hidden', // For clean borders
+        overflow: 'hidden',
     },
     tab: {
         flex: 1,
         paddingVertical: 14,
         alignItems: 'center',
-        borderBottomWidth: 3, // Thicker border for active tab
-        borderBottomColor: 'transparent', // Default transparent
+        borderBottomWidth: 3, 
+        borderBottomColor: 'transparent', 
     },
     activeTab: {
-        borderBottomColor: '#007ACC', // Active tab color
+        borderBottomColor: '#007ACC', 
     },
     tabText: {
         fontSize: 15,
@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.08,
         shadowRadius: 3,
         elevation: 2,
-        marginBottom: 10, // Added margin bottom for spacing before action buttons
+        marginBottom: 10, 
     },
     sectionTitle: {
         fontSize: 20,
@@ -514,7 +514,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#007ACC',
         marginRight: 10,
-        marginTop: 1, // Align bullet with text properly
+        marginTop: 1, 
         fontWeight: 'bold',
     },
     featureText: {
@@ -535,13 +535,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#555555',
         fontWeight: '600',
-        flex: 0.45, // Allocate space
+        flex: 0.45, 
         fontFamily: 'Avenir-Medium',
     },
     specValue: {
         fontSize: 16,
         color: '#777777',
-        flex: 0.55, // Allocate space
+        flex: 0.55, 
         textAlign: 'right',
         fontFamily: 'Avenir-Book',
     },
@@ -619,12 +619,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir-Medium',
     },
     offerCard: {
-        backgroundColor: '#E8F5E9', // Light green background for offers
+        backgroundColor: '#E8F5E9',
         padding: 18,
         borderRadius: 10,
         marginBottom: 15,
         borderLeftWidth: 5,
-        borderLeftColor: '#28A745', // Green border for offers
+        borderLeftColor: '#28A745', 
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.05,
@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
     },
     offerTitle: {
         fontSize: 15,
-        color: '#1A5F2D', // Darker green for offer title
+        color: '#1A5F2D', 
         fontWeight: 'bold',
         fontFamily: 'Avenir-Medium',
     },
@@ -660,8 +660,8 @@ const styles = StyleSheet.create({
         color: '#007ACC',
         fontWeight: 'bold',
         fontFamily: 'Avenir-Medium',
-        backgroundColor: '#EBF5FF', // Light blue background for code
-        alignSelf: 'flex-start', // Fit to content
+        backgroundColor: '#EBF5FF', 
+        alignSelf: 'flex-start', 
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 5,
@@ -669,38 +669,38 @@ const styles = StyleSheet.create({
     actionButtons: {
         flexDirection: 'row',
         padding: 20,
-        gap: 15, // Using gap for spacing
-        backgroundColor: '#FFFFFF', // Background for action buttons bar
+        gap: 15, 
+        backgroundColor: '#FFFFFF', 
         borderTopWidth: 1,
         borderTopColor: '#EEEEEE',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: -2 }, // Shadow at the top
+        shadowOffset: { width: 0, height: -2 }, 
         shadowOpacity: 0.05,
         shadowRadius: 3,
         elevation: 5,
     },
     addToCartButton: {
         flex: 1,
-        backgroundColor: '#E0E0E0', // Neutral background for Add to Cart
+        backgroundColor: '#E0E0E0', 
         paddingVertical: 16,
         borderRadius: 10,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#C0C0C0', // Lighter border
+        borderColor: '#C0C0C0', 
     },
     addToCartText: {
         fontSize: 17,
         fontWeight: 'bold',
-        color: '#555555', // Darker text for Add to Cart
+        color: '#555555', 
         fontFamily: 'Avenir-Heavy',
     },
     buyNowButton: {
         flex: 1,
-        backgroundColor: '#007ACC', // Vibrant blue for Buy Now
+        backgroundColor: '#007ACC', 
         paddingVertical: 16,
         borderRadius: 10,
         alignItems: 'center',
-        shadowColor: '#007ACC', // Shadow matching button color
+        shadowColor: '#007ACC', 
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.3,
         shadowRadius: 8,

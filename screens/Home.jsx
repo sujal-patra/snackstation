@@ -46,7 +46,7 @@ const Home = () => {
         component={ProductReview}
         options={{
           title: 'Product Reviews',
-          presentation: 'modal', // Optional: makes it appear like a pop-up sheet on iOS
+          presentation: 'modal', 
         }}
       />
     </Stack.Navigator>

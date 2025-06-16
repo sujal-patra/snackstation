@@ -1,5 +1,4 @@
 import React from 'react'
-// Only import react-native-gesture-handler on native platforms
 import 'react-native-gesture-handler'
 import { StyleSheet, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'

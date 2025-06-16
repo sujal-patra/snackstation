@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     minHeight: 52
   },
 
-  // Variants
+  
   primary: {
     backgroundColor: "#007AFF"
   },
@@ -236,57 +236,3 @@ const styles = StyleSheet.create({
 
 export default TouchableButton;
 
-// Usage Examples:
-
-/*
-// Add to Cart Button
-<TouchableButton
-  title="Add to Cart"
-  variant="primary"
-  size="medium"
-  onPress={() => console.log('Add to cart pressed')}
-  icon={<CartIcon />}
-/>
-
-// Buy Now Button
-<TouchableButton
-  title="Buy Now"
-  variant="secondary"
-  size="large"
-  onPress={() => console.log('Buy now pressed')}
-/>
-
-// Wishlist Button
-<TouchableButton
-  title="Add to Wishlist"
-  variant="wishlist"
-  size="medium"
-  onPress={() => console.log('Wishlist pressed')}
-  icon={<HeartIcon />}
-/>
-
-// Loading State
-<TouchableButton
-  title="Processing..."
-  variant="primary"
-  loading={true}
-  disabled={true}
-/>
-
-// Outline Button
-<TouchableButton
-  title="Add to Cart"
-  variant="outline"
-  size="medium"
-  onPress={() => console.log('Outline button pressed')}
-/>
-
-// With custom styling
-<TouchableButton
-  title="Custom Button"
-  variant="primary"
-  style={{ marginTop: 20, borderRadius: 20 }}
-  textStyle={{ fontSize: 18, fontWeight: 'bold' }}
-  onPress={() => console.log('Custom button pressed')}
-/>
-*/

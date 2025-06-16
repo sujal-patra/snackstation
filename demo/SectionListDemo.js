@@ -71,13 +71,3 @@ const styles = StyleSheet.create({
 
 export default SectionListDemo;
 
-// React App                      Store
-// =====                              usreProfile
-
-// com1      Transaction    <------    OrderHistory
-
-//    com2                                 Transaction
-
-//        com3
-// com4
-//    com5 ---------> Transaction

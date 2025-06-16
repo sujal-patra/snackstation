@@ -13,7 +13,7 @@ const Welcome = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, ///    full , 2 -- 2/12 - parent
+        flex: 1, 
         justifyContent: 'center',
         alignItems: 'center',
     },

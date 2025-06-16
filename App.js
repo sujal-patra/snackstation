@@ -29,8 +29,7 @@ export default function App() {
   );
 }
 
-// each component as part of navigation , the component is receving navigation props
-// also you will get header with back button
+
 
 const styles = StyleSheet.create({
   container: {

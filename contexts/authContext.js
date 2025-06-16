@@ -23,4 +23,3 @@ export const useAuth = () => {
   return React.useContext(AuthContext);
 };
 
-// create a list component (ScrollView, flat) -> products -> each product is going to have add to cart and buynow, you need to show cart icon with badges

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 300,
     borderWidth: 1,
-    borderColor: "black", // ✨ changed from "purple" to light gray
+    borderColor: "black",
     borderRadius: 12,
     paddingHorizontal: 15,
     backgroundColor: "#fff",

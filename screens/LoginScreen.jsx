@@ -9,7 +9,8 @@ import {
   TouchableHighlight,
   View,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Switch,
 } from 'react-native';
 import TextInputComponent from '../components/common/TextInputComponent';
 import loginScreenStyles from '../styles/loginScreenStyles';
@@ -23,20 +24,23 @@ const LoginScreen = ({ navigation }) => {
 
   const [userLoginCredential, setUserLoginCredential] = useState({
     username: 'emilys',
-    password: 'emilyspass'
+    password: 'emilyspass',
   });
 
+  const [rememberMe, setRememberMe] = useState(false); 
   const handleLogin = async () => {
     try {
       const result = await authenticateUser(userLoginCredential);
       if (result && result.accessToken) {
         const { accessToken, refreshToken, ...user } = result;
-        await storeAuthData(SESSION_KEYS.AUTH, JSON.stringify({ accessToken, refreshToken, user }));
+        if (rememberMe) {
+          await storeAuthData(SESSION_KEYS.AUTH, JSON.stringify({ accessToken, refreshToken, user }));
+        }
         setAuth({
           isAuthenticated: Boolean(result.accessToken),
           user,
           accessToken,
-          refreshToken
+          refreshToken,
         });
         navigation.navigate('Authenticated');
       }
@@ -49,7 +53,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (e) {
-      console.error("Error saving auth data:", e);
+      console.error('Error saving auth data:', e);
     }
   };
 
@@ -66,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
         <ScrollView contentContainerStyle={loginScreenStyles.scrollContainer}>
           <View style={loginScreenStyles.secondContainer}>
             <Image
-              resizeMode='cover'
+              resizeMode="cover"
               source={{ uri: 'https://i.pinimg.com/474x/1b/79/0b/1b790b24b15d40d69584543e600649d8.jpg' }}
               style={loginScreenStyles.logoImage}
             />
@@ -74,21 +78,22 @@ const LoginScreen = ({ navigation }) => {
 
           <View style={loginScreenStyles.loginContainer}>
             <TextInputComponent
-              type='email'
+              type="email"
               value={userLoginCredential.username}
-              placeholder='Enter your email'
-              onChange={text =>
-                setUserLoginCredential(prev => ({ ...prev, username: text }))
+              placeholder="Enter your email"
+              onChange={(text) =>
+                setUserLoginCredential((prev) => ({ ...prev, username: text }))
               }
             />
             <TextInputComponent
-              type='password'
+              type="password"
               value={userLoginCredential.password}
-              placeholder='Enter your password'
-              onChange={text =>
-                setUserLoginCredential(prev => ({ ...prev, password: text }))
+              placeholder="Enter your password"
+              onChange={(text) =>
+                setUserLoginCredential((prev) => ({ ...prev, password: text }))
               }
             />
+
             <TouchableHighlight
               style={loginScreenStyles.loginButton}
               onPress={handleLogin}
@@ -99,8 +104,15 @@ const LoginScreen = ({ navigation }) => {
               </View>
             </TouchableHighlight>
 
-            <View style={loginScreenStyles.infoRow}>
-              <Text style={loginScreenStyles.infoText}>Remember Me</Text>
+            {/* Updated Remember Me Row */}
+            <View style={styles.infoRow}>
+              <View style={styles.rememberMeContainer}>
+                <Switch
+                  value={rememberMe}
+                  onValueChange={setRememberMe}
+                />
+                <Text style={styles.rememberMeText}>Remember Me</Text>
+              </View>
               <Text style={loginScreenStyles.infoText}>Forgot Password?</Text>
             </View>
 
@@ -108,7 +120,9 @@ const LoginScreen = ({ navigation }) => {
               onPress={() => navigation.navigate('Signup')}
               style={loginScreenStyles.signupLink}
             >
-              <Text style={loginScreenStyles.signupText}>Don't have an account? Sign Up</Text>
+              <Text style={loginScreenStyles.signupText}>
+                Don't have an account? Sign Up
+              </Text>
             </Pressable>
           </View>
         </ScrollView>
@@ -125,6 +139,22 @@ const styles = StyleSheet.create({
     flex: 2,
     width: '100%',
     height: '100%',
+  },
+  infoRow: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+  },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rememberMeText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: 'black',
   },
 });
 

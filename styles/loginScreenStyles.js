@@ -4,7 +4,7 @@ const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
   scrollContainer: {
-    paddingVertical: 150, // adds top and bottom spacing
+    paddingVertical: 150, 
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
@@ -28,7 +28,7 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     elevation: 4,
-    marginTop: 20 // 🔽 This pushes the form further down
+    marginTop: 20 
   },
   loginButton: {
     height: 50,
