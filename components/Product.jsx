@@ -9,6 +9,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { CART_ACTIONS, CartContext } from '../contexts/cartContext';
 import TouchableButton from './common/TouchableButton';
+import { useWishlist } from '../contexts/wishlistContext';
 
 const Product = ({
   id,
@@ -25,10 +26,12 @@ const Product = ({
   onColorSelect,
 }) => {
   const { dispatch } = React.useContext(CartContext);
+  const { toggleWishlist, isFavorite } = useWishlist();
 
-  const discountPercentage = originalPrice && price
-    ? Math.round(((originalPrice - price) / originalPrice) * 100)
-    : discount;
+  const discountPercentage =
+    originalPrice && price
+      ? Math.round(((originalPrice - price) / originalPrice) * 100)
+      : discount;
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -37,6 +40,18 @@ const Product = ({
           source={{ uri: image || 'https://via.placeholder.com/150' }}
           style={styles.image}
         />
+
+        <TouchableOpacity
+          onPress={() => toggleWishlist({ id, image, title, price })}
+          style={styles.heartIcon}
+        >
+          <AntDesign
+            name={isFavorite(id) ? 'heart' : 'hearto'}
+            size={22}
+            color={isFavorite(id) ? '#E91E63' : '#999'}
+          />
+        </TouchableOpacity>
+
         {discountPercentage ? (
           <View style={styles.discountBadge}>
             <Text style={styles.discountText}>-{discountPercentage}%</Text>
@@ -45,10 +60,7 @@ const Product = ({
       </View>
 
       <View style={styles.content}>
-        {category && (
-          <Text style={styles.category}>{category.toUpperCase()}</Text>
-        )}
-        <Text style={styles.title} numberOfLines={2}>{title}</Text>
+        <Text style={styles.title} numberOfLines={1}>{title}</Text>
         <Text style={styles.description} numberOfLines={2}>{description}</Text>
 
         <View style={styles.priceRow}>
@@ -58,19 +70,9 @@ const Product = ({
           )}
         </View>
 
-        <View style={styles.colorContainer}>
-          {colors.map((color, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[styles.colorDot, { backgroundColor: color.value }]}
-              onPress={() => onColorSelect && onColorSelect(color)}
-            />
-          ))}
-        </View>
-
         <View style={styles.buttons}>
           <TouchableButton
-            title="Add to Cart"
+            title="Add"
             variant="primary"
             size="small"
             onPress={() =>
@@ -90,13 +92,13 @@ const Product = ({
                 },
               })
             }
-            icon={<AntDesign name="shoppingcart" size={20} color="white" />}
+            icon={<AntDesign name="plus" size={16} color="#fff" />}
           />
           <TouchableButton
-            title="Buy Now"
+            title="Buy"
             variant="secondary"
             size="small"
-            onPress={() => console.log('Buy now pressed')}
+            onPress={() => console.log('Buy Now')}
           />
         </View>
       </View>
@@ -108,86 +110,79 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 12,
     backgroundColor: '#fff',
-    marginVertical: 10,
-    overflow: 'hidden',
+    marginVertical: 8,
+    marginHorizontal: 4,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 6,
-    elevation: 5,
+    elevation: 3,
   },
   imageContainer: {
     position: 'relative',
-    height: 180,
-    backgroundColor: '#f2f2f2',
+    height: 160,
+    backgroundColor: '#f9f9f9',
   },
   image: {
     height: '100%',
     width: '100%',
     resizeMode: 'cover',
   },
+  heartIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#fff',
+    padding: 6,
+    borderRadius: 20,
+    elevation: 2,
+  },
   discountBadge: {
     position: 'absolute',
-    top: 8,
-    right: 8,
-    backgroundColor: '#FF3B30',
+    bottom: 8,
+    left: 8,
+    backgroundColor: '#ff7043',
     paddingVertical: 2,
     paddingHorizontal: 6,
-    borderRadius: 5,
+    borderRadius: 4,
   },
   discountText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 12,
+    fontWeight: 'bold',
   },
   content: {
-    padding: 12,
-  },
-  category: {
-    fontSize: 12,
-    color: '#999',
-    marginBottom: 4,
+    padding: 10,
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 2,
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#333',
   },
   description: {
     fontSize: 13,
-    color: '#444',
-    marginBottom: 8,
+    color: '#777',
+    marginVertical: 4,
   },
   priceRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
+    marginVertical: 4,
   },
   price: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
-    color: '#2E7D32',
-    marginRight: 10,
+    color: '#388e3c',
+    marginRight: 6,
   },
   originalPrice: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#999',
     textDecorationLine: 'line-through',
-  },
-  colorContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  colorDot: {
-    height: 20,
-    width: 20,
-    borderRadius: 10,
-    marginRight: 8,
-    borderWidth: 1,
-    borderColor: '#ccc',
   },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 8,
     gap: 10,
   },
 });

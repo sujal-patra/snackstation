@@ -4,6 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetails from '../components/ProductDetails';
 import LandingPage from './LandingPage';
 import ProductReview from '../components/ProductReview';
+import { products } from '../data'; 
+
+const recommended = products.filter(p => p.category === 'audio').slice(0, 5);
+
 
 const Stack = createNativeStackNavigator();
 

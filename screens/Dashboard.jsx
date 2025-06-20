@@ -12,7 +12,7 @@ const Dashboard = () => {
             source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }}
             style={styles.avatar}
           />
-          <Text style={styles.username}>Yo ,User  👋</Text>
+          <Text style={styles.username}>Yo ,Emily  👋</Text>
           <Text style={styles.subText}>Here's a quick overview of your account.</Text>
         </View>
 

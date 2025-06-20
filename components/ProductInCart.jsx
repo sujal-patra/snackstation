@@ -1,188 +1,156 @@
 import React, { useState } from 'react';
 import {
-    View,
-    Text,
-    Image,
-    TouchableOpacity,
-    StyleSheet,
-    Alert,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
 } from 'react-native';
 
-const ProductInCart = ({
-    product,
-    onQuantityChange,
-    onRemove,
-}) => {
-    const [quantity, setQuantity] = useState(product.quantity || 1);
+const ProductInCart = ({ product, onQuantityChange, onRemove }) => {
+  const [quantity, setQuantity] = useState(product.quantity || 1);
 
-    const handleIncrement = () => {
-        const newQuantity = quantity + 1;
-        setQuantity(newQuantity);
-        onQuantityChange?.(product.id, newQuantity);
-    };
+  const handleIncrement = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    onQuantityChange?.(product.id, newQuantity);
+  };
 
-    const handleDecrement = () => {
-        if (quantity > 1) {
-            const newQuantity = quantity - 1;
-            setQuantity(newQuantity);
-            onQuantityChange?.(product.id, newQuantity);
-        } else {
-            // Show confirmation before removing item
-            Alert.alert(
-                'Remove Item',
-                'Do you want to remove this item from cart?',
-                [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'Remove', style: 'destructive', onPress: () => onRemove?.(product.id) },
-                ]
-            );
-        }
-    };
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      onQuantityChange?.(product.id, newQuantity);
+    } else {
+      Alert.alert(
+        'Remove Item',
+        'Do you want to remove this snack from your cart?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Remove', style: 'destructive', onPress: () => onRemove?.(product.id) },
+        ]
+      );
+    }
+  };
 
-    const totalPrice = (product.price * quantity).toFixed(2);
+  const totalPrice = (product.price * quantity).toFixed(2);
 
-    return (
-        <View style={styles.container}>
-            <Image source={{ uri: product.image }} style={styles.productImage} />
+  return (
+    <View style={styles.card}>
+      <Image
+        source={{ uri: product.image }}
+        style={styles.image}
+      />
 
-            <View style={styles.productInfo}>
-                <Text style={styles.productName} numberOfLines={2}>
-                    {product.title}
-                </Text>
-                <Text style={styles.productPrice}>${product.price}</Text>
-                <Text style={styles.totalPrice}>Total: ${totalPrice}</Text>
-            </View>
+      <View style={styles.details}>
+        <Text style={styles.title} numberOfLines={2}>{product.title}</Text>
+        <Text style={styles.price}>₹{product.price} each</Text>
+        <Text style={styles.total}>Total: ₹{totalPrice}</Text>
+      </View>
 
-            <View style={styles.quantityContainer}>
-                <TouchableOpacity
-                    style={[styles.quantityButton, styles.decrementButton]}
-                    onPress={handleDecrement}
-                    activeOpacity={0.7}
-                >
-                    <Text style={styles.buttonText}>-</Text>
-                </TouchableOpacity>
-
-                <View style={styles.quantityDisplay}>
-                    <Text style={styles.quantityText}>{quantity}</Text>
-                </View>
-
-                <TouchableOpacity
-                    style={[styles.quantityButton, styles.incrementButton]}
-                    onPress={handleIncrement}
-                    activeOpacity={0.7}
-                >
-                    <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
-                style={styles.removeButton}
-                onPress={() => onRemove?.(product.id)}
-                activeOpacity={0.7}
-            >
-                <Text style={styles.removeButtonText}>×</Text>
-            </TouchableOpacity>
+      <View style={styles.actions}>
+        <View style={styles.quantityBox}>
+          <TouchableOpacity style={styles.quantityButton} onPress={handleDecrement}>
+            <Text style={styles.quantitySymbol}>−</Text>
+          </TouchableOpacity>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity style={styles.quantityButton} onPress={handleIncrement}>
+            <Text style={styles.quantitySymbol}>+</Text>
+          </TouchableOpacity>
         </View>
-    );
+
+        <TouchableOpacity
+          style={styles.removeButton}
+          onPress={() => onRemove?.(product.id)}
+        >
+          <Text style={styles.removeText}>×</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        padding: 16,
-        marginVertical: 4,
-        marginHorizontal: 16,
-        borderRadius: 12,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3.84,
-        elevation: 5,
-        alignItems: 'center',
-    },
-    productImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 8,
-        backgroundColor: '#f5f5f5',
-    },
-    productInfo: {
-        flex: 1,
-        marginLeft: 16,
-        marginRight: 8,
-    },
-    productName: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#333',
-        marginBottom: 4,
-    },
-    productPrice: {
-        fontSize: 14,
-        color: '#666',
-        marginBottom: 4,
-    },
-    totalPrice: {
-        fontSize: 16,
-        fontWeight: '700',
-        color: '#2196F3',
-    },
-    quantityContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f8f9fa',
-        borderRadius: 8,
-        marginRight: 8,
-    },
-    quantityButton: {
-        width: 36,
-        height: 36,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 6,
-    },
-    decrementButton: {
-        backgroundColor: '#ff6b6b',
-    },
-    incrementButton: {
-        backgroundColor: '#51cf66',
-    },
-    buttonText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    quantityDisplay: {
-        minWidth: 40,
-        height: 36,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 4,
-        marginHorizontal: 2,
-    },
-    quantityText: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#333',
-    },
-    removeButton: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: '#ff4757',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    removeButtonText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
+  card: {
+    flexDirection: 'row',
+    backgroundColor: '#f0fff0',
+    marginHorizontal: 16,
+    marginVertical: 6,
+    borderRadius: 16,
+    padding: 12,
+    elevation: 3,
+    alignItems: 'center',
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 12,
+    backgroundColor: '#e6ffe6',
+  },
+  details: {
+    flex: 1,
+    marginLeft: 14,
+    justifyContent: 'space-between',
+  },
+  title: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#2e7d32',
+  },
+  price: {
+    fontSize: 13,
+    color: '#777',
+    marginTop: 2,
+  },
+  total: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#43a047',
+    marginTop: 4,
+  },
+  actions: {
+    alignItems: 'center',
+  },
+  quantityBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e9',
+    borderRadius: 10,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+  },
+  quantityButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+    backgroundColor: '#81c784',
+  },
+  quantitySymbol: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  quantityText: {
+    fontSize: 16,
+    marginHorizontal: 8,
+    fontWeight: '600',
+    color: '#2e7d32',
+  },
+  removeButton: {
+    marginTop: 6,
+    backgroundColor: '#f44336',
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  removeText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
 export default ProductInCart;

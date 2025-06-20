@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import Product from './Product';
 import { useNavigation } from '@react-navigation/native';
 
-const ProductList = ({ data: products }) => {
+const ProductList = ({ data }) => {
   const navigation = useNavigation();
 
   const handleProductPress = (product) => {
@@ -11,56 +11,34 @@ const ProductList = ({ data: products }) => {
   };
 
   const handleColorSelect = (color) => {
-    console.log('Color selected:', color);
+    console.log('Color selected:', color.name);
   };
 
   return (
     <FlatList
-      data={products}
+      data={data}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item: {
-        id,
-        brand,
-        image,
-        title,
-        description,
-        price,
-        discount,
-        category,
-        color,
-      } }) => (
-        <View key={id} style={styles.productWrapper}>
+      renderItem={({ item }) => (
+        <View key={item.id} style={styles.productWrapper}>
           <Product
             {...{
-              id,
-              image,
-              title,
-              description,
-              price,
-              originalPrice: price,
-              discount,
-              tag: brand,
-              category,
+              id: item.id,
+              image: item.image,
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              originalPrice: item.originalPrice || item.price,
+              discount: item.discount,
+              tag: item.tag || item.category,
+              category: item.category,
               colors: [
-                { name: 'Black', value: '#000000' },
-                { name: 'White', value: '#ffffff' },
-                { name: color || 'Red', value: '#ff0000' },
-                { name: 'Blue', value: '#0066cc' },
+                { name: 'Green', value: '#4CAF50' },
+                { name: 'Orange', value: '#FF9800' },
+                { name: 'Red', value: '#F44336' },
+                { name: 'Blue', value: '#2196F3' },
               ],
             }}
-            onPress={() =>
-              handleProductPress({
-                id,
-                images: [image],
-                title,
-                description,
-                price,
-                originalPrice: price,
-                discount,
-                tag: brand,
-                category,
-              })
-            }
+            onPress={() => handleProductPress(item)}
             onColorSelect={handleColorSelect}
           />
         </View>
@@ -74,11 +52,11 @@ const ProductList = ({ data: products }) => {
 const styles = StyleSheet.create({
   productWrapper: {
     marginBottom: 16,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
   },
   listContainer: {
-    paddingBottom: 20,
-    paddingTop: 10,
+    paddingVertical: 10,
+    paddingBottom: 30,
   },
 });
 

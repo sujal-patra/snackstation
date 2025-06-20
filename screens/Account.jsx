@@ -1,154 +1,137 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-    View,
-    Text,
-    Image,
-    TouchableOpacity,
-    StyleSheet,
-    ScrollView,
-    SafeAreaView,
-    Alert,
+  View, Text, Image, TouchableOpacity, StyleSheet,
+  ScrollView, SafeAreaView, Alert
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../contexts/authContext';
 import { useNavigation } from '@react-navigation/native';
-import accountStyles from '../styles/accountStyles';
 
+export default function AccountSettings() {
+  const { auth, logout } = useAuth();
+  const navigation = useNavigation();
+  const { user } = auth;
 
-const AccountSettings = () => {
-    const { auth, logout } = useAuth();
-    const navigation = useNavigation()
+  const [profileImage, setProfileImage] = useState(
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face'
+  );
 
-    const { user } = auth;
+  const handleEditPhoto = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert("Permission Denied", "Allow access to your photo library.");
+      return;
+    }
 
-    const handleProfilePress = () => {
-        Alert.alert('Profile', 'Navigate to Profile Settings');
-    };
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+      aspect: [1, 1],
+    });
 
-    const handleOrderPress = () => {
-        Alert.alert('Orders', 'Navigate to My Orders');
-    };
+    if (!result.canceled) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
 
-    const handleTransactionPress = () => {
-        Alert.alert('Transactions', 'Navigate to Transaction History');
-    };
+  const confirmLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        style: 'destructive',
+        onPress: () => {
+          logout();
+          navigation.replace('Login');
+        },
+      },
+    ]);
+  };
 
-    const handleLogoutPress = () => {
-        console.log(navigation);
-        logout()
-        navigation.replace("Login");
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Account</Text>
+        </View>
 
-        Alert.alert(
-            'Logout',
-            'Are you sure you want to logout?',
-            [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'Logout', style: 'destructive', onPress: () => console.log('User logged out') }
-            ]
-        );
-    };
+        <View style={styles.profileSection}>
+          <TouchableOpacity onPress={handleEditPhoto}>
+            <Image source={{ uri: profileImage }} style={styles.avatar} />
+          </TouchableOpacity>
+          <Text style={styles.name}>{user?.firstName} {user?.lastName}</Text>
+          <Text style={styles.email}>{user?.email}</Text>
+        </View>
 
-    const handleEditPhoto = () => {
-        Alert.alert('Edit Photo', 'Select photo from gallery or camera');
-    };
+        <View style={styles.options}>
+          <Option title="📄 Profile Info" onPress={() => Alert.alert('Profile Info')} />
+          <Option title="🛒 My Orders" onPress={() => Alert.alert('Orders')} />
+          <Option title="💳 Transactions" onPress={() => Alert.alert('Transactions')} />
+          <Option title="🚪 Logout" isLogout onPress={confirmLogout} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
 
-    const MenuButton = ({ icon, title, onPress, isLogout = false, showArrow = true }) => (
-        <TouchableOpacity
-            style={[accountStyles.menuButton, isLogout && accountStyles.logoutButton]}
-            onPress={onPress}
-            activeOpacity={0.7}
-        >
-            <View style={accountStyles.menuButtonLeft}>
-                <View style={[accountStyles.iconContainer, isLogout && accountStyles.logoutIconContainer]}>
-                    <Text style={[accountStyles.iconText, isLogout && accountStyles.logoutIconText]}>{icon}</Text>
-                </View>
-                <Text style={[accountStyles.menuButtonText, isLogout && accountStyles.logoutText]}>
-                    {title}
-                </Text>
-            </View>
-            {showArrow && (
-                <Text style={[accountStyles.arrowText, isLogout && accountStyles.logoutArrowText]}>›</Text>
-            )}
-        </TouchableOpacity>
-    );
+const Option = ({ title, onPress, isLogout }) => (
+  <TouchableOpacity
+    style={[styles.option, isLogout && styles.logoutOption]}
+    onPress={onPress}
+  >
+    <Text style={[styles.optionText, isLogout && styles.logoutText]}>{title}</Text>
+  </TouchableOpacity>
+);
 
-    return (
-        <SafeAreaView style={accountStyles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Header */}
-                <View style={accountStyles.header}>
-                    <Text style={accountStyles.headerTitle}>Account Settings</Text>
-                </View>
-
-                {/* Profile Photo Section */}
-                <View style={accountStyles.photoSection}>
-                    <View style={accountStyles.photoContainer}>
-                        <Image
-                            source={{
-                                uri: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face'
-                            }}
-                            style={accountStyles.profilePhoto}
-                        />
-                        <TouchableOpacity
-                            style={accountStyles.editPhotoButton}
-                            onPress={handleEditPhoto}
-                            activeOpacity={0.8}
-                        >
-                            <Text style={accountStyles.editPhotoText}>📷</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={accountStyles.userName}>{`${user?.firstName} ${user?.lastName}`}</Text>
-                    <Text style={accountStyles.userEmail}>{user?.email}</Text>
-                    <View style={accountStyles.membershipBadge}>
-                        <Text style={accountStyles.membershipText}>Premium Member</Text>
-                    </View>
-                </View>
-
-                {/* Menu Buttons Section */}
-                <View style={accountStyles.menuSection}>
-                    <Text style={accountStyles.sectionTitle}>Account</Text>
-
-                    <View style={accountStyles.menuContainer}>
-                        <MenuButton
-                            icon="👤"
-                            title="Profile Settings"
-                            onPress={handleProfilePress}
-                        />
-
-                        <View style={accountStyles.separator} />
-
-                        <MenuButton
-                            icon="🛍️"
-                            title="My Orders"
-                            onPress={handleOrderPress}
-                        />
-
-                        <View style={accountStyles.separator} />
-
-                        <MenuButton
-                            icon="💳"
-                            title="Transaction History"
-                            onPress={handleTransactionPress}
-                        />
-                    </View>
-
-                    <View style={accountStyles.logoutSection}>
-                        <MenuButton
-                            icon="🚪"
-                            title="Logout"
-                            onPress={handleLogoutPress}
-                            isLogout={true}
-                            showArrow={false}
-                        />
-                    </View>
-                </View>
-
-                {/* Bottom Spacing */}
-                <View style={accountStyles.bottomSpacing} />
-            </ScrollView>
-        </SafeAreaView>
-    );
-};
-
-
-
-export default AccountSettings;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fefefe',
+  },
+  header: {
+    padding: 20,
+    backgroundColor: '#4CAF50',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  profileSection: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  email: {
+    color: '#555',
+    marginBottom: 10,
+  },
+  options: {
+    marginTop: 20,
+    paddingHorizontal: 20,
+  },
+  option: {
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  optionText: {
+    fontSize: 16,
+  },
+  logoutOption: {
+    backgroundColor: '#fff0f0',
+  },
+  logoutText: {
+    color: '#e53935',
+    fontWeight: 'bold',
+  },
+});
