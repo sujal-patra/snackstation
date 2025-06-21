@@ -2,12 +2,15 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
-import Authenticated from './screens/Authenticated'; 
+import Authenticated from './screens/Authenticated';
+
 import { AuthProvider, useAuth } from './contexts/authContext';
 import { WishlistProvider } from './contexts/wishlistContext';
 import { CartProvider } from './contexts/cartContext';
+import { PantryProvider } from './contexts/pantryContext'; 
 
 const Stack = createNativeStackNavigator();
 
@@ -33,10 +36,12 @@ export default function App() {
     <AuthProvider>
       <WishlistProvider>
         <CartProvider>
-          <NavigationContainer>
-            <StatusBar style="auto" />
-            <AppNavigator />
-          </NavigationContainer>
+          <PantryProvider> 
+            <NavigationContainer>
+              <StatusBar style="auto" />
+              <AppNavigator />
+            </NavigationContainer>
+          </PantryProvider>
         </CartProvider>
       </WishlistProvider>
     </AuthProvider>

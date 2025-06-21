@@ -30,7 +30,7 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <ImageBackground
       source={{
-        uri: 'https://plus.unsplash.com/premium_photo-1669732922459-0d1946366259?fm=jpg&q=60&w=3000',  }}
+        uri: 'https://heas.health.vic.gov.au/wp-content/uploads/2023/03/array-of-colourful-ingredients-749x788.jpg',  }}
       resizeMode="cover"
       style={{ flex: 1 }}
     >
@@ -45,7 +45,7 @@ const SignUpScreen = ({ navigation }) => {
               <Image
                 resizeMode="cover"
                 source={{
-                  uri: 'https://i.pinimg.com/474x/1b/79/0b/1b790b24b15d40d69584543e600649d8.jpg',
+                  uri: 'https://static.vecteezy.com/system/resources/previews/022/585/210/non_2x/cute-burger-lifting-dumbbell-cartoon-icon-illustration-food-healthy-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg',
                 }}
                 style={loginScreenStyles.logoImage}
               />

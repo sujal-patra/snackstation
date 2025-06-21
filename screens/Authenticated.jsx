@@ -9,6 +9,8 @@ import Cart from './Cart';
 import Home from './Home';
 import WishlistScreen from '../screens/WishlistScreen';
 import { useCart } from '../contexts/cartContext';
+import RecipeScreen from './RecipeScreen';
+import RecipeStackNavigator from '../components/RecipeStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +18,10 @@ const Authenticated = () => {
   const { shoppingCart } = useCart();
 
   return (
+    
     <Tab.Navigator>
+     
+
       <Tab.Screen
         name="Home"
         component={Home}
@@ -30,6 +35,18 @@ const Authenticated = () => {
         }}
       />
       <Tab.Screen
+  name="Recipes"
+  component={RecipeStackNavigator}
+  options={{
+    tabBarLabel: 'Recipes',
+    tabBarLabelStyle: { fontWeight: 'bold', fontSize: 15 },
+    tabBarIcon: () => (
+      <AntDesign name="book" size={25} color="black" /> 
+    ),
+  }}
+/>
+
+      <Tab.Screen
         name="Wishlist"
         component={WishlistScreen}
         options={{
@@ -41,10 +58,10 @@ const Authenticated = () => {
         }}
       />
       <Tab.Screen
-        name="Dashboard"
+        name="Pantry"
         component={Dashboard}
         options={{
-          tabBarLabel: 'Dashboard',
+          tabBarLabel: 'Pantry',
           tabBarLabelStyle: { fontWeight: 'bold', fontSize: 15 },
           tabBarIcon: () => (
             <AntDesign name="dashboard" size={25} color="black" />

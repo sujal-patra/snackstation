@@ -4,10 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetails from '../components/ProductDetails';
 import LandingPage from './LandingPage';
 import ProductReview from '../components/ProductReview';
-import { products } from '../data'; 
-
-const recommended = products.filter(p => p.category === 'audio').slice(0, 5);
-
 
 const Stack = createNativeStackNavigator();
 
@@ -17,17 +13,17 @@ const Home = () => {
       initialRouteName="LandingPage"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#6a1b9a',
+          backgroundColor: '#4CAF50',
         },
         headerTitleStyle: {
-          color: 'white',
-          fontSize: 22,
-          fontWeight: '600',
+          color: '#fff',
+          fontSize: 20,
+          fontWeight: 'bold',
         },
         headerTintColor: '#fff',
         animation: Platform.OS === 'ios' ? 'slide_from_right' : 'fade_from_bottom',
         contentStyle: {
-          backgroundColor: '#f3e5f5',
+          backgroundColor: '#f8f8f8',
         },
       }}
     >
@@ -35,28 +31,26 @@ const Home = () => {
         name="LandingPage"
         component={LandingPage}
         options={{
-          headerShown: false,
+          headerShown: false, // Full screen landing
         }}
       />
       <Stack.Screen
         name="Details"
         component={ProductDetails}
         options={{
-          title: 'Product Details',
+          title: 'Product Details 🍽️',
         }}
       />
       <Stack.Screen
         name="Review"
         component={ProductReview}
         options={{
-          title: 'Product Reviews',
-          presentation: 'modal', 
+          title: 'Customer Reviews ⭐',
+          presentation: 'modal', // Slide up
         }}
       />
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Home;

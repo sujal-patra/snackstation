@@ -44,7 +44,7 @@ const TouchableComponent = ({ pageChangeHandler }) => {
           console.log("====================================");
           console.log("Pressed touch");
           console.log("====================================");
-          //   pageChangeHandler("touch");
+          
         }}
         onLongPress={() => {
           console.log("====================================");
@@ -52,13 +52,7 @@ const TouchableComponent = ({ pageChangeHandler }) => {
           console.log("====================================");
         }}
       >
-        {/* <Image
-          style={{ width: 100, height: 100 }}
-          source={{
-            uri:
-              "https://th.bing.com/th?id=OIP.KHZXE_Xx_R3ML0CNUkZUgAHaE8&w=306&h=204&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
-          }}
-        /> */}
+       
         <Text>TouchangleHighlight</Text>
       </TouchableHighlight>
       <Text>-----------------TouchableOpacity--------------------</Text>

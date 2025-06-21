@@ -13,7 +13,7 @@ export default function AccountSettings() {
   const { user } = auth;
 
   const [profileImage, setProfileImage] = useState(
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face'
+    'https://wallpapers-clan.com/wp-content/uploads/2022/08/zoro-pfp-8.jpg'
   );
 
   const handleEditPhoto = async () => {
@@ -50,9 +50,9 @@ export default function AccountSettings() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Account</Text>
+          <Text style={styles.headerTitle}>My Account</Text>
         </View>
 
         <View style={styles.profileSection}>
@@ -64,10 +64,11 @@ export default function AccountSettings() {
         </View>
 
         <View style={styles.options}>
-          <Option title="📄 Profile Info" onPress={() => Alert.alert('Profile Info')} />
-          <Option title="🛒 My Orders" onPress={() => Alert.alert('Orders')} />
-          <Option title="💳 Transactions" onPress={() => Alert.alert('Transactions')} />
-          <Option title="🚪 Logout" isLogout onPress={confirmLogout} />
+          <Option title="📄  Profile Info" onPress={() => Alert.alert('Profile Info')} />
+          <Option title="🛒  My Orders" onPress={() => Alert.alert('Orders')} />
+          <Option title="💳  Transactions" onPress={() => Alert.alert('Transactions')} />
+          <Option title="⚙️  Settings" onPress={() => Alert.alert('Settings')} />
+          <Option title="🚪  Logout" isLogout onPress={confirmLogout} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -78,6 +79,7 @@ const Option = ({ title, onPress, isLogout }) => (
   <TouchableOpacity
     style={[styles.option, isLogout && styles.logoutOption]}
     onPress={onPress}
+    activeOpacity={0.7}
   >
     <Text style={[styles.optionText, isLogout && styles.logoutText]}>{title}</Text>
   </TouchableOpacity>
@@ -86,52 +88,64 @@ const Option = ({ title, onPress, isLogout }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fefefe',
+    backgroundColor: '#ffffff',
   },
   header: {
-    padding: 20,
+    padding: 24,
     backgroundColor: '#4CAF50',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    alignItems: 'center',
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
   },
   profileSection: {
     alignItems: 'center',
-    padding: 20,
+    paddingVertical: 24,
+    paddingHorizontal: 20,
   },
   avatar: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    marginBottom: 10,
+    marginBottom: 12,
+    borderWidth: 2,
+    borderColor: '#4CAF50',
   },
   name: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
+    color: '#333',
   },
   email: {
-    color: '#555',
-    marginBottom: 10,
+    color: '#777',
+    fontSize: 14,
+    marginTop: 4,
   },
   options: {
     marginTop: 20,
     paddingHorizontal: 20,
   },
   option: {
+    backgroundColor: '#f5f5f5',
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    paddingHorizontal: 18,
+    borderRadius: 10,
+    marginBottom: 12,
   },
   optionText: {
     fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
   },
   logoutOption: {
-    backgroundColor: '#fff0f0',
+    backgroundColor: '#ffe6e6',
   },
   logoutText: {
-    color: '#e53935',
+    color: '#d32f2f',
     fontWeight: 'bold',
   },
 });

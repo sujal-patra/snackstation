@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://plus.unsplash.com/premium_photo-1669732922459-0d1946366259?fm=jpg&q=60&w=3000' }}
+      source={{ uri: 'https://as1.ftcdn.net/jpg/03/32/12/28/1000_F_332122807_niegnafTOdmqwRS2FL1kF8hmYusF5CHi.jpg' }}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
@@ -71,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
           <View style={loginScreenStyles.secondContainer}>
             <Image
               resizeMode="cover"
-              source={{ uri: 'https://i.pinimg.com/474x/1b/79/0b/1b790b24b15d40d69584543e600649d8.jpg' }}
+              source={{ uri: 'https://static.vecteezy.com/system/resources/previews/022/585/210/non_2x/cute-burger-lifting-dumbbell-cartoon-icon-illustration-food-healthy-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg' }}
               style={loginScreenStyles.logoImage}
             />
           </View>

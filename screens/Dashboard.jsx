@@ -1,109 +1,145 @@
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const Dashboard = () => {
+const initialPantryItems = [
+  { id: 1, name: 'Brown Rice', quantity: '1 kg' },
+  { id: 2, name: 'Almond Butter', quantity: '500 g' },
+  { id: 3, name: 'Chickpeas', quantity: '2 cans' },
+  { id: 4, name: 'Whole Wheat Pasta', quantity: '500 g' },
+  { id: 5, name: 'Quinoa', quantity: '1 kg' },
+  { id: 6, name: 'Oats (Rolled)', quantity: '750 g' },
+  { id: 7, name: 'Red Lentils (Masoor Dal)', quantity: '1 kg' },
+  { id: 8, name: 'Toor Dal', quantity: '1 kg' },
+  { id: 9, name: 'Canned Tomatoes', quantity: '3 cans' },
+  { id: 10, name: 'Peanut Butter', quantity: '400 g' },
+  { id: 11, name: 'Honey', quantity: '250 ml' },
+  { id: 12, name: 'Cooking Oil (Sunflower)', quantity: '1 L' },
+  { id: 13, name: 'Olive Oil (Extra Virgin)', quantity: '500 ml' },
+  { id: 14, name: 'Salt', quantity: '1 kg' },
+  { id: 15, name: 'Sugar (Brown)', quantity: '500 g' },
+  { id: 16, name: 'Black Pepper (Whole)', quantity: '100 g' },
+  { id: 17, name: 'Turmeric Powder', quantity: '100 g' },
+  { id: 18, name: 'Cumin Seeds', quantity: '150 g' },
+  { id: 19, name: 'Green Tea Bags', quantity: '20 bags' },
+  { id: 20, name: 'Instant Coffee', quantity: '100 g' },
+  { id: 21, name: 'Bread Crumbs', quantity: '250 g' },
+  { id: 22, name: 'Corn Flour', quantity: '500 g' },
+  { id: 23, name: 'Dry Yeast', quantity: '1 packet' },
+  { id: 24, name: 'Tinned Coconut Milk', quantity: '2 cans' },
+  { id: 25, name: 'Dark Chocolate Chips', quantity: '300 g' }
+];
+
+
+const PantryScreen = () => {
+  const [pantryItems, setPantryItems] = useState(initialPantryItems);
+
+  const updateQuantity = (id, newQuantity) => {
+    setPantryItems(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const deleteItem = (id) => {
+    Alert.alert('Remove Item', 'Are you sure you want to remove this item?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Remove',
+        style: 'destructive',
+        onPress: () =>
+          setPantryItems(prev => prev.filter(item => item.id !== id)),
+      },
+    ]);
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <View style={styles.itemLeft}>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <TextInput
+          style={styles.input}
+          value={item.quantity}
+          onChangeText={(text) => updateQuantity(item.id, text)}
+        />
+      </View>
+      <TouchableOpacity onPress={() => deleteItem(item.id)}>
+        <MaterialIcons name="delete" size={24} color="red" />
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
-    <SafeAreaView style={styles.safeContainer}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.heading}>Welcome to your Dashboard</Text>
-
-        <View style={styles.card}>
-          <Image
-            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }}
-            style={styles.avatar}
-          />
-          <Text style={styles.username}>Yo ,Emily  👋</Text>
-          <Text style={styles.subText}>Here's a quick overview of your account.</Text>
-        </View>
-
-        <View style={styles.statsContainer}>
-          <View style={styles.statBox}>
-            <Text style={styles.statValue}>12</Text>
-            <Text style={styles.statLabel}>Orders</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statValue}>10000</Text>
-            <Text style={styles.statLabel}>Spent</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Text style={styles.statValue}>5⭐</Text>
-            <Text style={styles.statLabel}>Rating</Text>
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text style={styles.heading}>My Pantry</Text>
+      {pantryItems.length === 0 ? (
+        <Text style={styles.emptyText}>Your pantry is empty.</Text>
+      ) : (
+        <FlatList
+          data={pantryItems}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+          contentContainerStyle={styles.list}
+        />
+      )}
+    </View>
   );
 };
 
+export default PantryScreen;
+
 const styles = StyleSheet.create({
-  safeContainer: {
-    flex: 1,
-    backgroundColor: '#f7f8fa',
-  },
   container: {
-    padding: 20,
-    alignItems: 'center',
+    flex: 1,
+    backgroundColor: '#f4fff4',
+    padding: 16,
   },
   heading: {
     fontSize: 24,
     fontWeight: '700',
-    marginBottom: 20,
-    color: '#333',
-  },
-  card: {
-    backgroundColor: '#fff',
-    width: '100%',
-    borderRadius: 16,
-    padding: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 4,
-    marginBottom: 30,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    color: '#4CAF50',
     marginBottom: 12,
   },
-  username: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 4,
-    color: '#444',
+  list: {
+    paddingBottom: 20,
   },
-  subText: {
-    fontSize: 14,
-    color: '#777',
-    textAlign: 'center',
-  },
-  statsContainer: {
+  itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-  },
-  statBox: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginHorizontal: 5,
     alignItems: 'center',
-    elevation: 3,
+    backgroundColor: '#fff',
+    marginBottom: 12,
+    padding: 12,
+    borderRadius: 10,
+    elevation: 2,
   },
-  statValue: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#2c5aa0',
+  itemLeft: {
+    flex: 1,
   },
-  statLabel: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 4,
+  itemName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+  input: {
+    backgroundColor: '#f0f0f0',
+    padding: 8,
+    borderRadius: 6,
+    fontSize: 14,
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#777',
+    marginTop: 50,
   },
 });
-
-export default Dashboard;
