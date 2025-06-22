@@ -5,8 +5,12 @@ team - Scriptsmiths
 Members 
 1. Sujal patra  22beeh58 
 2. Laxmi narayan sahoo 22beei87
-3. Dibya prakash rout 22beebb85
+3. Dibya prakash rout 22beeb85
 4. K pawan kumar rao 22beei87
+
+this is a video link for the app
+https://drive.google.com/file/d/1Pja9S-wObm8zdRQdDwaaW1tBhNUpTzwd/view?usp=sharing
+
 
 ![IMG-20250622-WA0007](https://github.com/user-attachments/assets/2d35496b-608a-49aa-a5d0-2c4aac486955)
 ![IMG-20250622-WA0008](https://github.com/user-attachments/assets/daa32c15-747a-4bcd-85db-46f1bc042373)
